@@ -48,17 +48,3 @@ The general request flow is:
 `schema.sql` creates the database tables and constraints.
 
 `seed.sql` inserts sample data such as menu items and pickup time slots when the application starts.
-
-## Example Endpoints
-
-- `GET /menu` - returns menu items
-- `GET /slots` - returns available pickup slots
-
-Additional endpoints for orders, customers, and staff functionality will be added as the project develops.
-
-## Running the Project
-
-From the project directory, run:
-
-```bash
-./mvnw spring-boot:run
