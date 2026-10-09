@@ -1,0 +1,42 @@
+<!-- Really basic ordering page. I have literally no idea how to use thymeleaf.-->
+
+<!DOCTYPE html>
+<html 
+
+xmlns:th="http://www.thymeleaf.org"> 
+
+</html>
+
+<head> 
+
+<p> Welcome to Clucky's Chicken!</p>>
+
+<p th:if="${session.username != null}">
+    Welcome, <span th:text="${session.username}"></span>!
+</p>
+
+<a th:if="${session.username == null}" href="/login">
+    Login
+</a>
+
+<a th:if="${session.username != null}" href="/logout">
+    Logout
+</a>
+
+<a th:if="${session.role == 'CUSTOMER'}"
+   href="/my-orders">
+    My Orders
+</a>
+
+<a th:if="${session.role == 'PROVIDER'}"
+   href="/staff/orders">
+    Staff Orders
+</a>
+<!-- <a href="/login">Login</a>
+<br> 
+<a href="/slots">View Pickup Times</a> 
+<br> 
+<a href="/my-orders">My Orders</a>
+-->
+</body>
+</html>

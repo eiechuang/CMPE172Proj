@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Orders</title>
+</head>
+<body>
+
+<h1>My Orders</h1>
+
+<p th:if="${#lists.isEmpty(orders)}">
+    You have no orders.
+</p>
+
+<div th:each="order : ${orders}">
+
+    <hr>
+
+    <p>
+        Order ID:
+        <span th:text="${order.orderId}"></span>
+    </p>
+
+    <p>
+        Pickup:
+        <span th:text="${order.startTime}"></span>
+        -
+        <span th:text="${order.endTime}"></span>
+    </p>
+
+    <p>
+        Status:
+        <span th:text="${order.status}"></span>
+    </p>
+
+    <p>
+        Instructions:
+        <span th:text="${order.instructions}"></span>
+    </p>
+
+    <form
+        th:if="${order.status == 'BOOKED'}"
+        th:action="@{/my-orders/{id}/cancel(id=${order.orderId})}"
+        method="post">
+
+        <button type="submit">
+            Cancel Order
+        </button>
+
+    </form>
+
+</div>
+
+<br>
+
+<a href="/">Back Home</a>
+
+</body>
+</html>

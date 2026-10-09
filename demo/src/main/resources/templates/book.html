@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Book Pickup</title>
+</head>
+
+<body>
+
+<h1>Book Pickup</h1>
+
+<p>
+    Pickup time:
+    <span th:text="${slot.startTime}"></span>
+</p>
+
+<form method="post" action="/book">
+
+    <input
+        type="hidden"
+        name="slotId"
+        th:value="${slot.id}">
+
+    <label>Special Instructions:</label>
+
+    <textarea name="instructions"></textarea>
+
+    <br>
+
+    <button type="submit">
+        Confirm Booking
+    </button>
+
+</form>
+
+</body>
+</html>
