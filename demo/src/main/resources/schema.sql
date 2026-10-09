@@ -25,6 +25,7 @@ CREATE TABLE orders (
     user_id BIGINT NOT NULL,
     slot_id BIGINT NOT NULL,
     status VARCHAR(30) NOT NULL,
+    instructions VARCHAR(500),
 
     FOREIGN KEY (user_id)
         REFERENCES users(user_id),
@@ -32,7 +33,8 @@ CREATE TABLE orders (
     FOREIGN KEY (slot_id)
         REFERENCES pickup_slots(slot_id),
 
-    CONSTRAINT uq_user_slot UNIQUE (user_id, slot_id) --should prevent double ID/Booking.
+    CONSTRAINT uq_user_slot
+        UNIQUE (user_id, slot_id)
 );
 
 -- update this later, just basic code pulled from the internet to get started. Haven't writtne in SQL in probably 3 years, so will n

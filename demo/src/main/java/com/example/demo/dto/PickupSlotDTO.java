@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record PickupSlotDTO(
    // id, datetime/starttime,   
    
-   float ID, 
+   Long ID, 
    LocalDateTime startTime, 
    LocalDateTime endTime
 ) {}

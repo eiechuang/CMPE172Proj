@@ -1,14 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.repo.BookingRepo;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import com.example.demo.dto.BookingDTO;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.example.demo.repo.BookingRepo;
 
 @Service
 public class BookingService {
@@ -26,20 +24,28 @@ public class BookingService {
             String instructions) {
 
         bookingRepo.createBooking(
-                userId,
-                slotId,
-                instructions
+            userId,
+            slotId,
+            instructions
         );
     }
+
     public List<BookingDTO> getBookingsForUser(Long userId) {
-    return bookingRepo.findByUserId(userId);
-}
-@Transactional
-public boolean cancelBooking(Long orderId, Long userId) {
 
-    int rowsUpdated =
-        bookingRepo.cancelBooking(orderId, userId);
+        return bookingRepo.findByUserId(userId);
+    }
 
-    return rowsUpdated > 0;
-}
+    @Transactional
+    public boolean cancelBooking(
+            Long orderId,
+            Long userId) {
+
+        int rowsUpdated =
+            bookingRepo.cancelBooking(
+                orderId,
+                userId
+            );
+
+        return rowsUpdated > 0;
+    }
 }

@@ -11,32 +11,51 @@ xmlns:th="http://www.thymeleaf.org">
 
 <p> Welcome to Clucky's Chicken!</p>>
 
-<p th:if="${session.username != null}">
-    Welcome, <span th:text="${session.username}"></span>!
-</p>
+<!-- Logged out -->
+<div th:if="${session.username == null}">
+    <a href="/slots">View Pickup Times</a>
+    <br><br>
 
-<a th:if="${session.username == null}" href="/login">
-    Login
-</a>
+    <a href="/login">Login</a>
+    <br><br>
 
-<a th:if="${session.username != null}" href="/logout">
-    Logout
-</a>
+    <a href="/register">Create Account</a>
+</div>
 
-<a th:if="${session.role == 'CUSTOMER'}"
-   href="/my-orders">
-    My Orders
-</a>
+<!-- Logged in -->
+<div th:if="${session.username != null}">
 
-<a th:if="${session.role == 'PROVIDER'}"
-   href="/staff/orders">
-    Staff Orders
-</a>
-<!-- <a href="/login">Login</a>
-<br> 
-<a href="/slots">View Pickup Times</a> 
-<br> 
-<a href="/my-orders">My Orders</a>
--->
+    <h2>
+        Welcome, <span th:text="${session.username}"></span>!
+    </h2>
+
+    <!-- Everyone logged in can view slots -->
+    <a href="/slots">View Pickup Times</a>
+
+    <br><br>
+
+    <!-- Customer only -->
+    <a th:if="${session.role == 'CUSTOMER'}"
+       href="/my-orders">
+        My Orders
+    </a>
+
+    <br><br>
+
+    <!-- Provider only -->
+    <div th:if="${session.role == 'PROVIDER'}">
+        <a href="/staff/orders">View Staff Orders</a>
+
+        <br><br>
+
+        <a href="/staff/slots">Manage Pickup Slots</a>
+    </div>
+
+    <br>
+
+    <a href="/logout">Logout</a>
+
+</div>
+
 </body>
 </html>

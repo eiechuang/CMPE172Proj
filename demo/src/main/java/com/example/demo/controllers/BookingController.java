@@ -86,14 +86,13 @@ public class BookingController {
     }
 
 
-    @GetMapping("/my-orders")
+   @GetMapping("/my-orders")
 public String myOrders(
         HttpSession session,
         HttpServletResponse response,
         Model model) {
 
-    String role =
-        (String) session.getAttribute("role");
+    String role = (String) session.getAttribute("role");
 
     if (role == null) {
         return "redirect:/login?required";
@@ -104,8 +103,7 @@ public String myOrders(
         return "403";
     }
 
-    Long userId =
-        (Long) session.getAttribute("userId");
+    Long userId = (Long) session.getAttribute("userId");
 
     model.addAttribute(
         "orders",
@@ -113,30 +111,6 @@ public String myOrders(
     );
 
     return "my-orders";
-}
-@PostMapping("/my-orders/{orderId}/cancel")
-public String cancelOrder(
-        @PathVariable Long orderId,
-        HttpSession session,
-        HttpServletResponse response) {
 
-    String role =
-        (String) session.getAttribute("role");
-
-    if (role == null) {
-        return "redirect:/login?required";
-    }
-
-    if (!"CUSTOMER".equals(role)) {
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        return "403";
-    }
-
-    Long userId =
-        (Long) session.getAttribute("userId");
-
-    bookingService.cancelBooking(orderId, userId);
-
-    return "redirect:/my-orders";
 }
 }

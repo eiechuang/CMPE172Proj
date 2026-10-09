@@ -13,6 +13,12 @@
         -
         <span th:text="${slot.endTime}"></span>
     </p>
+
+    <a th:href="@{/book(slotId=${slot.ID})}">
+        Book
+    </a>
+
+    <br><br>
 </div>
 
 <a href="/">Back Home</a>
