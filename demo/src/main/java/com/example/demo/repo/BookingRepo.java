@@ -16,25 +16,7 @@ public class BookingRepo {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void createBooking(
-            Long userId,
-            Long slotId,
-            String instructions) {
-
-        String sql = """
-            INSERT INTO orders
-                (user_id, slot_id, status, instructions)
-            VALUES
-                (?, ?, 'BOOKED', ?)
-        """;
-
-        jdbcTemplate.update(
-            sql,
-            userId,
-            slotId,
-            instructions
-        );
-    }
+   
 
     public List<BookingDTO> findByUserId(Long userId) {
 
@@ -85,4 +67,54 @@ public class BookingRepo {
             userId
         );
     }
+    public void createBooking(
+        Long userId,
+        Long slotId,
+        String instructions) {
+
+    String sql = """
+        INSERT INTO orders
+            (user_id, slot_id, status, instructions)
+        VALUES
+            (?, ?, 'BOOKED', ?)
+    """;
+
+    jdbcTemplate.update(
+        sql,
+        userId,
+        slotId,
+        instructions
+    );
+}
+
+public List<BookingDTO> findAllBookings() {
+
+    String sql = """
+        SELECT
+            o.order_id,
+            o.user_id,
+            o.slot_id,
+            p.start_time,
+            p.end_time,
+            o.status,
+            o.instructions
+        FROM orders o
+        JOIN pickup_slots p
+            ON o.slot_id = p.slot_id
+        ORDER BY p.start_time
+    """;
+
+    return jdbcTemplate.query(
+        sql,
+        (rs, rowNum) -> new BookingDTO(
+            rs.getLong("order_id"),
+            rs.getLong("user_id"),
+            rs.getLong("slot_id"),
+            rs.getTimestamp("start_time").toLocalDateTime(),
+            rs.getTimestamp("end_time").toLocalDateTime(),
+            rs.getString("status"),
+            rs.getString("instructions")
+        )
+    );
+}
 }

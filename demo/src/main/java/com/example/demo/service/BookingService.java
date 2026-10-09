@@ -31,8 +31,11 @@ public class BookingService {
     }
 
     public List<BookingDTO> getBookingsForUser(Long userId) {
-
         return bookingRepo.findByUserId(userId);
+    }
+
+    public List<BookingDTO> getAllBookings() {
+        return bookingRepo.findAllBookings();
     }
 
     @Transactional

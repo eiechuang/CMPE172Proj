@@ -1,19 +1,55 @@
-<!DOCTYPE html> 
-<html>
-<head> 
-    <title>
-        Welcome to staff orders!
-    </title>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Orders</title>
 </head>
+<body>
+
+<h1>All Orders</h1>
+
+<p th:if="${#lists.isEmpty(orders)}">
+    No orders have been placed.
+</p>
+
+<div th:each="order : ${orders}">
+    <hr>
+
+    <p>
+        Order ID:
+        <span th:text="${order.orderId}"></span>
+    </p>
+
+    <p>
+        Customer ID:
+        <span th:text="${order.userId}"></span>
+    </p>
+
+    <p>
+        Pickup:
+        <span th:text="${order.startTime}"></span>
+        -
+        <span th:text="${order.endTime}"></span>
+    </p>
+
+    <p>
+        Status:
+        <span th:text="${order.status}"></span>
+    </p>
+
+    <p>
+        Instructions:
+        <span th:text="${order.instructions}"></span>
+    </p>
+</div>
 
 <br>
-<body> 
 
-    <h1> Staff Orders</h1>
-    <br> 
-<p>Staff order management page.</p>
-<br> 
+<a href="/staff/slots">Manage Pickup Slots</a>
 
-    <a href="/">Home</a>
+<br><br>
+
+<a href="/">Back Home</a>
+
 </body>
 </html>

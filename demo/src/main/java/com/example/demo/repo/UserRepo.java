@@ -1,10 +1,11 @@
 package com.example.demo.repo;
 
-import com.example.demo.dto.UserDTO;
+import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.dto.UserDTO;
 
 @Repository
 public class UserRepo {
@@ -23,7 +24,7 @@ public class UserRepo {
             WHERE username = ?
         """;
 
-        return jdbcTemplate.queryForObject(
+        List<UserDTO> users = jdbcTemplate.query(
             sql,
             (rs, rowNum) -> new UserDTO(
                 rs.getLong("user_id"),
@@ -33,25 +34,31 @@ public class UserRepo {
             ),
             username
         );
+
+        if (users.isEmpty()) {
+            return null;
+        }
+
+        return users.get(0);
     }
+
     public void createUser(
-        String username,
-        String passwordHash,
-        String role) {
+            String username,
+            String passwordHash,
+            String role) {
 
-    String sql = """
-        INSERT INTO users
-            (username, password_hash, role)
-        VALUES
-            (?, ?, ?)
-    """;
+        String sql = """
+            INSERT INTO users
+                (username, password_hash, role)
+            VALUES
+                (?, ?, ?)
+        """;
 
-    jdbcTemplate.update(
-        sql,
-        username,
-        passwordHash,
-        role
-    );
-}
-
+        jdbcTemplate.update(
+            sql,
+            username,
+            passwordHash,
+            role
+        );
+    }
 }
